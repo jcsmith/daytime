@@ -5,9 +5,11 @@
 
 
 <p id="demo"></p>
+<p id="josh"></p>
 
 <script>
 var x = document.getElementById("demo");
+var y = document.getElementById("josh");
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -20,6 +22,22 @@ function getLocation() {
 function showPosition(position) {
     x.innerHTML = "Latitude: " + position.coords.latitude + 
     "<br>Longitude: " + position.coords.longitude; 
+
+   var myloc = { timestamp: position.timestamp, latitude:position.coords.latitude, longitude:position.coords.longitude }
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', "http://107.170.29.204/cgi-bin/test.py?loc="+ JSON.stringify(myloc), true);
+    xhr.send();
+    xhr.addEventListener("readystatechange", processRequest, false);
+   xhr.onreadystatechange = processRequest;
+   
+   function processRequest(e) {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        var response = xhr.responseText;
+	y.innerHTML = response
+    }
+}
+
 }
 
 function showError(error) {
