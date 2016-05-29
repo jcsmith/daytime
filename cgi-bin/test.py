@@ -18,11 +18,5 @@ dictMyObserver = {}
 dictMyObserver['sunrise'] = myObserver.previous_rising(ephem.Sun()).datetime().isoformat()
 dictMyObserver['sunset'] = myObserver.next_setting(ephem.Sun()).datetime().isoformat()
 
-print("Content-type:text/html\r\n\r\n")
-print ("Sunrise: ")
-print (myObserver.previous_rising(ephem.Sun()))
-print (" UTC </br>")
-print ("Sunset: ")
-print (myObserver.next_setting(ephem.Sun()))
-print (" UTC </br>")
+print("Content-type:application/json\r\n\r\n")
 print (json.dumps(dictMyObserver))
