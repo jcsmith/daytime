@@ -3,19 +3,21 @@
 	<body>
 
 
-
+		<p id="StatusInfo">Calculating Sunrise and Sunset Times...</p>
 		<p id="Sunrise"></p>
 		<p id ="Sunset"></p>
+		
 
 		<script>
-var x = document.getElementById("Sunrise");
-var y = document.getElementById("Sunset");
+		var x = document.getElementById("Sunrise");
+		var y = document.getElementById("Sunset");
+		var StatusInfo = document.getElementById("StatusInfo")
 
 function getLocation() {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(showPosition, showError);
 	} else { 
-		x.innerHTML = "Geolocation is not supported by this browser.";
+		StatusInfo.innerHTML = "Geolocation is not supported by this browser.";
 	}
 }
 
@@ -35,6 +37,7 @@ function showPosition(position) {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var response = xhr.responseText;
 			var objResponse = JSON.parse(response)
+			StatusInfo.innerHTML = ""
 			x.innerHTML = objResponse.sunrise
 			y.innerHTML = objResponse.sunset
 		}
@@ -45,21 +48,21 @@ function showPosition(position) {
 function showError(error) {
 	switch(error.code) {
 		case error.PERMISSION_DENIED:
-			x.innerHTML = "User denied the request for Geolocation."
+			StatusInfo.innerHTML = "User denied the request for Geolocation."
 				break;
 		case error.POSITION_UNAVAILABLE:
-			x.innerHTML = "Location information is unavailable."
+			StatusInfo.innerHTML = "Location information is unavailable."
 				break;
 		case error.TIMEOUT:
-			x.innerHTML = "The request to get user location timed out."
+			StatusInfo.innerHTML = "The request to get user location timed out."
 				break;
 		case error.UNKNOWN_ERROR:
-			x.innerHTML = "An unknown error occurred."
+			StatusInfo.innerHTML = "An unknown error occurred."
 				break;
 	}
 }
 
-document.getElementById("demo").innerHTML = getLocation();
+getLocation();
 		</script>
 
 	</body>
