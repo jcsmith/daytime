@@ -4,12 +4,14 @@ import cgi
 import cgitb
 import json
 import ephem
+import datetime
 
 fs = cgi.FieldStorage()
 
 location = json.loads(fs.getvalue('loc'))
+location['timeStampAsDate'] = datetime.datetime.strptime(location['timeStampAsDate'], '%Y-%m-%dT%H:%M:%S.%fZ')
 myObserver = ephem.Observer()
-myObserver.date =  '2016/05/29 17:00'
+myObserver.date = str(location['timeStampAsDate'])
 myObserver.lat = str(location['latitude'])
 myObserver.lon = str(location['longitude'])
 
