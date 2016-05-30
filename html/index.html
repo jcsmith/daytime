@@ -34,8 +34,9 @@ function showPosition(position) {
 	function processRequest(e) {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var response = xhr.responseText;
-			y.innerHTML = response
-			x.innerHTML = response
+			var objResponse = JSON.parse(response)
+			x.innerHTML = objResponse.sunrise
+			y.innerHTML = objResponse.sunset
 		}
 	}
 
