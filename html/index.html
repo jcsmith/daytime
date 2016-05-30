@@ -1,68 +1,66 @@
 <!DOCTYPE html>
 <html>
-<body>
+	<body>
 
 
 
-<p id="demo"></p>
-<p id="josh"></p>
+		<p id="Sunrise"></p>
+		<p id ="Sunset"></p>
 
-<script>
-var x = document.getElementById("demo");
-var y = document.getElementById("josh");
+		<script>
+var x = document.getElementById("Sunrise");
+var y = document.getElementById("Sunset");
 
 function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
-    } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(showPosition, showError);
+	} else { 
+		x.innerHTML = "Geolocation is not supported by this browser.";
+	}
 }
 
 function showPosition(position) {
 	var timeStampAsDate = new Date(position.timestamp);
 	var timeStampAsDateJSON = timeStampAsDate.toJSON();
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude + "<br>TimeStamp:" + position.timestamp +
-    "<br>TimeStampDate:" + timeStampAsDateJSON;
 
-   var myloc = { timestamp: position.timestamp, timeStampAsDate: timeStampAsDateJSON, latitude:position.coords.latitude, longitude:position.coords.longitude }
-    
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', "http://107.170.29.204/cgi-bin/test.py?loc="+ JSON.stringify(myloc), true);
-    xhr.send();
-    xhr.addEventListener("readystatechange", processRequest, false);
-   xhr.onreadystatechange = processRequest;
-   
-   function processRequest(e) {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        var response = xhr.responseText;
-	y.innerHTML = response
-    }
-}
+	var myloc = { timestamp: position.timestamp, timeStampAsDate: timeStampAsDateJSON, latitude:position.coords.latitude, longitude:position.coords.longitude }
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', "http://107.170.29.204/cgi-bin/test.py?loc="+ JSON.stringify(myloc), true);
+	xhr.send();
+	xhr.addEventListener("readystatechange", processRequest, false);
+	xhr.onreadystatechange = processRequest;
+
+	function processRequest(e) {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var response = xhr.responseText;
+			y.innerHTML = response
+			x.innerHTML = response
+		}
+	}
 
 }
 
 function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            x.innerHTML = "User denied the request for Geolocation."
-            break;
-        case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable."
-            break;
-        case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out."
-            break;
-        case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred."
-            break;
-    }
+	switch(error.code) {
+		case error.PERMISSION_DENIED:
+			x.innerHTML = "User denied the request for Geolocation."
+				break;
+		case error.POSITION_UNAVAILABLE:
+			x.innerHTML = "Location information is unavailable."
+				break;
+		case error.TIMEOUT:
+			x.innerHTML = "The request to get user location timed out."
+				break;
+		case error.UNKNOWN_ERROR:
+			x.innerHTML = "An unknown error occurred."
+				break;
+	}
 }
 
 document.getElementById("demo").innerHTML = getLocation();
-</script>
+		</script>
 
-</body>
+	</body>
 </html>
 
