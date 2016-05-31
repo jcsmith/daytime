@@ -36,10 +36,12 @@ function showPosition(position) {
 	function processRequest(e) {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var response = xhr.responseText;
-			var objResponse = JSON.parse(response)
+			var objResponse = JSON.parse(response);
+			var sunrise = new Date(objResponse.sunrise)
+			var sunset = new Date(objResponse.sunset)
 			StatusInfo.innerHTML = ""
-			x.innerHTML = objResponse.sunrise
-			y.innerHTML = objResponse.sunset
+			x.innerHTML = sunrise
+			y.innerHTML = sunset
 		}
 	}
 

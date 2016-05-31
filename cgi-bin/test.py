@@ -17,8 +17,8 @@ myObserver.lon = str(location['longitude'])
 
 dictMyObserver = {}
 
-dictMyObserver['sunrise'] = myObserver.previous_rising(ephem.Sun()).datetime().isoformat()
-dictMyObserver['sunset'] = myObserver.next_setting(ephem.Sun()).datetime().isoformat()
+dictMyObserver['sunrise'] = myObserver.previous_rising(ephem.Sun()).datetime().isoformat() + 'Z'
+dictMyObserver['sunset'] = myObserver.next_setting(ephem.Sun()).datetime().isoformat() + 'Z'
 
 print("Content-type:application/json\r\n\r\n")
 print (json.dumps(dictMyObserver))
