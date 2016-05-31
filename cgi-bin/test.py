@@ -2,9 +2,9 @@
 
 import cgi
 import cgitb
-import json
-import ephem
 import datetime
+import ephem
+import json
 
 fs = cgi.FieldStorage()
 
