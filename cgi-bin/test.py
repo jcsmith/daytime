@@ -17,6 +17,11 @@ myObserver.lon = str(location['longitude'])
 
 dictMyObserver = {}
 
+#Since we are primarly integrating with javascript on the front end and it seems to assume
+#a datetime string with no time zone specified is local time and _NOT_ UTC time we must
+#append a Z to the end of the datetime string.  This seems like a hack but I have not been able
+#to find a better solution anywhere online.
+
 dictMyObserver['sunrise'] = myObserver.previous_rising(ephem.Sun()).datetime().isoformat() + 'Z'
 dictMyObserver['sunset'] = myObserver.next_setting(ephem.Sun()).datetime().isoformat() + 'Z'
 
