@@ -28,7 +28,7 @@ function showPosition(position) {
 	var myloc = { timestamp: position.timestamp, timeStampAsDate: timeStampAsDateJSON, latitude:position.coords.latitude, longitude:position.coords.longitude }
 
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', "http://107.170.29.204/cgi-bin/test.py?loc="+ JSON.stringify(myloc), true);
+	xhr.open('GET', "/cgi-bin/test.py?loc="+ JSON.stringify(myloc), true);
 	xhr.send();
 	xhr.addEventListener("readystatechange", processRequest, false);
 	xhr.onreadystatechange = processRequest;
