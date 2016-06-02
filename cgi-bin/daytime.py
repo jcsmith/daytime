@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import cgi
-import cgitb
 import datetime
 import ephem
 import json
