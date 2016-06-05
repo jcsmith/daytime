@@ -11,7 +11,7 @@ The response from this object is either an http error code or a JSON object of t
 
 ```
 {
-	"is_daylight:(true|false),
+	"is_daylight":(true|false),
 	"previous_sunrise":(DateTime of previous sunrise),
 	"next_sunrise":(DateTime of next sunrise),
 	"previous_sunset":(DateTime of previous sunset),
