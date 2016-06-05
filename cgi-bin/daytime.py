@@ -20,7 +20,6 @@ def returnHTTP400 ():
     print ()
 
 
-
 #Create an empty dictionary to hold results of sunrise/sunset calculations for json serialization.
 dictMyObserver = {}
 
@@ -33,8 +32,6 @@ except:
     returnHTTP400()
     sys.exit()
 
-
-
 offset = fs.getfirst("offset")
 try:
     offset = json.loads(offset)
@@ -42,19 +39,9 @@ except:
     dictMyObserver['offset'] = "0"
 
 
-
-
-#Convert timestamp to python datetime object.
-try:
-    location['timeStampAsDate'] = datetime.datetime.strptime(location['timeStampAsDate'], '%Y-%m-%dT%H:%M:%S.%fZ')
-except:
-    returnHTTP400()
-    sys.exit()
-
 #Create pyephem observer using the timestamp and coordinates provided.
 try:
     myObserver = ephem.Observer()
-    myObserver.date = str(location['timeStampAsDate'])
     myObserver.lat = str(location['latitude'])
     myObserver.lon = str(location['longitude'])
 except:
