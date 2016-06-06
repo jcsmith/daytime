@@ -41,8 +41,8 @@ function showPosition(position) {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var response = xhr.responseText;
 			var objResponse = JSON.parse(response);
-			var sunrise = new Date(objResponse.sunrise)
-			var sunset = new Date(objResponse.sunset)
+			var sunrise = new Date(objResponse.previous_sunrise)
+			var sunset = new Date(objResponse.next_sunset)
 			StatusInfo.innerHTML = ""
 			x.innerHTML = "Sunrise: " + sunrise
 			y.innerHTML = "Sunset: " + sunset

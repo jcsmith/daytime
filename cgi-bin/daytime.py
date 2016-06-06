@@ -19,10 +19,26 @@ def returnHTTP400 ():
     print ('Status: 400 Bad Request')
     print ()
 
+def observer2output(observer):
+    dictObserver = {}
+
+    dictObserver['previous_sunrise'] = observer.previous_rising(ephem.Sun()).datetime().isoformat() + 'Z'
+    dictObserver['next_sunrise'] = observer.next_rising(ephem.Sun()).datetime().isoformat() + 'Z'
+    dictObserver['previous_sunset'] = observer.previous_setting(ephem.Sun()).datetime().isoformat() + 'Z'
+    dictObserver['next_sunset'] = observer.next_setting(ephem.Sun()).datetime().isoformat() + 'Z'
+    dictObserver['is_daylight'] = is_daylight(observer)
+
+    return (json.dumps(dictObserver))
+
+def is_daylight(observer):
+    #given a pyephem observer return true if it is currently daylight
+    #false otherwise.
+    if (observer.next_setting(ephem.Sun()).datetime() > observer.next_rising(ephem.Sun()).datetime()):
+        return False
+    else:
+        return True
 
 #Create an empty dictionary to hold results of sunrise/sunset calculations for json serialization.
-dictMyObserver = {}
-
 fs = cgi.FieldStorage()
 
 location = fs.getfirst('loc')
@@ -32,14 +48,7 @@ except:
     returnHTTP400()
     sys.exit()
 
-offset = fs.getfirst("offset")
-try:
-    offset = json.loads(offset)
-except:
-    dictMyObserver['offset'] = "0"
-
-
-#Create pyephem observer using the timestamp and coordinates provided.
+#Create pyephem observer using the coordinates provided.
 try:
     myObserver = ephem.Observer()
     myObserver.lat = str(location['latitude'])
@@ -54,9 +63,9 @@ except:
 #append a Z to the end of the datetime string.  This seems like a hack but I have not been able
 #to find a better solution anywhere online.
 
-dictMyObserver['sunrise'] = myObserver.previous_rising(ephem.Sun()).datetime().isoformat() + 'Z'
-dictMyObserver['sunset'] = myObserver.next_setting(ephem.Sun()).datetime().isoformat() + 'Z'
+
+output = observer2output(myObserver)
 
 #"Return" a JSON object to the webserver.
 print("Content-type:application/json\r\n\r\n")
-print (json.dumps(dictMyObserver))
+print (output)
