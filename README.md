@@ -10,8 +10,8 @@ submit it to the python script and display the result in a human friendly format
 
 As input this script accepts the following:
 
-- location:
--- a JSON object of the following format:
+- location(Reguired):
+a JSON object with one of the following formats:
 ```
 {
 	"latitude":(LATITUDE),
@@ -19,7 +19,7 @@ As input this script accepts the following:
 	"altitude"(ALTITUDE)
 }
 ```
-
+or
 ```
 {
 	"latitude":(LATITUDE),
@@ -31,6 +31,16 @@ As input this script accepts the following:
 The response from this object is either an http error code or a JSON object of the following format:
 
 ```
+-Date(optional):
+a JSON object with one of the following formats:
+```
+{
+	"Date":"YYYY-MM-DD"
+}
+```
+
+To compute sunrise and sunset times for a date other than the current one.
+
 {
 	"is_daylight":(true|false),
 	"previous_sunrise":(DateTime of previous sunrise),
