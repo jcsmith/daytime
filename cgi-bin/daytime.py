@@ -22,6 +22,11 @@ def returnHTTP400 ():
 def observer2output(observer):
     dictObserver = {}
 
+    #Since we are primarly integrating with javascript on the frontend and it seems to assume
+    #a datetime string with no time zone specified is local time and _NOT_ UTC time we must
+    #append a Z to the end of the datetime string.  This seems like a hack but I have not been able
+    #to find a better solution anywhere online.
+
     dictObserver['previous_sunrise'] = observer.previous_rising(ephem.Sun()).datetime().isoformat() + 'Z'
     dictObserver['next_sunrise'] = observer.next_rising(ephem.Sun()).datetime().isoformat() + 'Z'
     dictObserver['previous_sunset'] = observer.previous_setting(ephem.Sun()).datetime().isoformat() + 'Z'
@@ -38,7 +43,6 @@ def is_daylight(observer):
     else:
         return True
 
-#Create an empty dictionary to hold results of sunrise/sunset calculations for json serialization.
 fs = cgi.FieldStorage()
 
 location = fs.getfirst('loc')
@@ -57,11 +61,6 @@ except:
     returnHTTP400()
     sys.exit()
 
-
-#Since we are primarly integrating with javascript on the frontend and it seems to assume
-#a datetime string with no time zone specified is local time and _NOT_ UTC time we must
-#append a Z to the end of the datetime string.  This seems like a hack but I have not been able
-#to find a better solution anywhere online.
 
 
 output = observer2output(myObserver)
