@@ -6,6 +6,27 @@ and returns a json object containing the sunrise and sunset times based on the l
 A sample front-end is provided which uses the HTML5/javascript location functions to retrieve a devices location,
 submit it to the python script and display the result in a human friendly format.
 
+##Input.
+
+As input this script accepts the following:
+
+- location:
+-- a JSON object of the following format:
+```
+{
+	"latitude":(LATITUDE),
+	"Longitude":(LONGITUDE),
+	"altitude"(ALTITUDE)
+}
+```
+
+```
+{
+	"latitude":(LATITUDE),
+	"Longitude":(LONGITUDE),
+}
+```
+
 ##Response:
 The response from this object is either an http error code or a JSON object of the following format:
 
