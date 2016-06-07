@@ -29,10 +29,10 @@ function showPosition(position) {
 	var timeStampAsDate = new Date(position.timestamp);
 	var timeStampAsDateJSON = timeStampAsDate.toJSON();
 
-	var myloc = { timestamp: position.timestamp, timeStampAsDate: timeStampAsDateJSON, latitude:position.coords.latitude, longitude:position.coords.longitude }
+	var myloc = { latitude:position.coords.latitude, longitude:position.coords.longitude, altitude:position.coords.altitude }
 
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', "/cgi-bin/daytime.py?loc="+ JSON.stringify(myloc), true);
+	xhr.open('GET', "/cgi-bin/daytime.py?location="+ JSON.stringify(myloc), true);
 	xhr.send();
 	xhr.addEventListener("readystatechange", processRequest, false);
 	xhr.onreadystatechange = processRequest;

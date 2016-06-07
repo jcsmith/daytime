@@ -45,7 +45,7 @@ def is_daylight(observer):
 
 fs = cgi.FieldStorage()
 
-location = fs.getfirst('loc')
+location = fs.getfirst('location')
 try:
     location = json.loads(location)
 except:
