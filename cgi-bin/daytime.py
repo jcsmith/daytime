@@ -52,11 +52,17 @@ except:
     returnHTTP400()
     sys.exit()
 
+offset = fs.getfirst('offset')
+
+
 #Create pyephem observer using the coordinates provided.
 try:
     myObserver = ephem.Observer()
     myObserver.lat = str(location['latitude'])
     myObserver.lon = str(location['longitude'])
+    if (location['altitude']):
+        myObserver.elevation = location['altitude']
+
 except:
     returnHTTP400()
     sys.exit()
