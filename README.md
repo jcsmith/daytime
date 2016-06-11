@@ -27,6 +27,22 @@ or
 }
 ```
 
+- offset (optional):
+a JSON object with the following format:
+```
+{
+	"sunrise_offset":(Offset in minutes),
+	"sunset_offset":(offset in minutes),
+}
+```
+
+Either the sunrise_offset or the sunset_offset may be ommited from this object.
+The sunrise_offset will be added to the calculated sunrise time before it is
+returned and the sunset_offset will be subtracted from the calculated sunset
+time before it is returned.
+
+
+
 ##Response:
 The response from this object is either an http error code or a JSON object of the following format:
 
