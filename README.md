@@ -47,15 +47,6 @@ time before it is returned.
 The response from this object is either an http error code or a JSON object of the following format:
 
 ```
--Date(optional):
-a JSON object with one of the following formats:
-```
-{
-	"Date":"YYYY-MM-DD"
-}
-```
-
-To compute sunrise and sunset times for a date other than the current one.
 
 {
 	"is_daylight":(true|false),
