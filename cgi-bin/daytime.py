@@ -19,18 +19,20 @@ def returnHTTP400 ():
     print ('Status: 400 Bad Request')
     print ()
 
-def observer2output(observer):
+def observer2output(observer, sunrise_offset=0,sunset_offset=0):
     dictObserver = {}
+    sunrise_offset = datetime.timedelta(minutes=sunrise_offset)
+    sunset_offset = datetime.timedelta(minutes=sunset_offset)
 
     #Since we are primarly integrating with javascript on the frontend and it seems to assume
     #a datetime string with no time zone specified is local time and _NOT_ UTC time we must
     #append a Z to the end of the datetime string.  This seems like a hack but I have not been able
     #to find a better solution anywhere online.
 
-    dictObserver['previous_sunrise'] = observer.previous_rising(ephem.Sun()).datetime().isoformat() + 'Z'
-    dictObserver['next_sunrise'] = observer.next_rising(ephem.Sun()).datetime().isoformat() + 'Z'
-    dictObserver['previous_sunset'] = observer.previous_setting(ephem.Sun()).datetime().isoformat() + 'Z'
-    dictObserver['next_sunset'] = observer.next_setting(ephem.Sun()).datetime().isoformat() + 'Z'
+    dictObserver['previous_sunrise'] = (observer.previous_rising(ephem.Sun()).datetime() + sunrise_offset).isoformat() + 'Z'
+    dictObserver['next_sunrise'] = (observer.next_rising(ephem.Sun()).datetime() + sunrise_offset).isoformat() + 'Z'
+    dictObserver['previous_sunset'] = (observer.previous_setting(ephem.Sun()).datetime() - sunset_offset).isoformat() + 'Z'
+    dictObserver['next_sunset'] = (observer.next_setting(ephem.Sun()).datetime() - sunset_offset).isoformat() + 'Z'
     dictObserver['is_daylight'] = is_daylight(observer)
 
     return (json.dumps(dictObserver))
@@ -53,6 +55,14 @@ except:
     sys.exit()
 
 offset = fs.getfirst('offset')
+
+if offset:
+    try:
+        offset = json.loads(offset)
+    except:
+        returnHTTP400()
+        sys.exit()
+
 
 
 #Create pyephem observer using the coordinates provided.
