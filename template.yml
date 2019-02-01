@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  daytime app
+  return sunreise and sunset times for a given location and date.
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  SunRiseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: daytime
+      Handler: sunrise.lambda_handler
+      Runtime: python3.6
+      Events:
+        SunRise:
+          Type: Api 
+          Properties:
+            Path: /sunrise
+            Method: get
+  SunSetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: daytime
+      Handler: sunset.lambda_handler
+      Runtime: python3.6
+      Events:
+        Sunset:
+          Type: Api 
+          Properties:
+            Path: /sunset
+            Method: get
+Outputs:
+  DaytimeApi:
+    Description: "API Gateway endpoint URL for Prod stage for Sunrise function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/Sunrise/"
+
+  SunRiseFunction:
+    Description: "Sunrise Function ARN"
+    Value: !GetAtt HelloWorldFunction.Arn
+
+  SunRiseIamRole:
+    Description: "Implicit IAM Role created for Sunrise function"
+    Value: !GetAtt HelloWorldFunctionRole.Arn
